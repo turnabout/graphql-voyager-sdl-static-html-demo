@@ -1,5 +1,25 @@
 # GraphQL Voyager + SDL input + Static HTML demo
 
+---
+
+## **IMPORTANT: FIX**
+The fix was pretty simple actually. The issue was in this part of the `<script>` tag:
+
+```javascript
+const data = window.introspectionFromSchema(window.buildSchema(sdl));
+
+GraphQLVoyager.renderVoyager(document.getElementById('voyager'), {
+    introspection: data
+});
+```
+
+`renderVoyager` expects `data` to be nested under a `data` key. In other words, the fix is:
+
+```javascript
+const data = { data: window.introspectionFromSchema(window.buildSchema(sdl)) };
+```
+---
+
 Demo replicating an issue with usage of GraphQL Voyager on a static HTML page, using an existing SDL input string rather than creating an introspection query.
 
 View the demo running at https://turnabout.github.io/graphql-voyager-sdl-static-html-demo/
